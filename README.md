@@ -1,2 +1,2 @@
-slimline-templates
+Slimline Post Type, User and Term Templates
 ==================
