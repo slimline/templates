@@ -45,6 +45,12 @@ function slimline_templates_init() {
 	define( 'SLIMLINE_TEMPLATES_DIR', plugin_dir_path( __FILE__ ) );
 	define( 'SLIMLINE_TEMPLATES_INC', trailingslashit( SLIMLINE_TEMPLATES_DIR ) . 'inc' );
 
+	add_action( 'load-edit-tags.php', 'slimline_templates_taxonomies' );
+	add_action( 'load-post.php', 'slimline_templates_single_posts' );
+	add_action( 'load-post-new.php', 'slimline_templates_single_posts' );
+	add_action( 'load-profile.php', 'slimline_templates_users' );
+	add_action( 'load-users.php', 'slimline_templates_users' );
+
 	if ( ! defined( 'SLIMLINE_VERSION' ) ) {
 
 		include( trailingslashit( SLIMLINE_TEMPLATES_INC ) . 'template.php' );
@@ -57,4 +63,16 @@ function slimline_templates_init() {
 		add_filter( 'taxonomy_template', 'slimline_templates_taxonomy_template', 999 ); // add custom taxonomy templates to template hierarchy  | inc/template.php
 
 	}
+}
+
+/**
+ * slimline_templates_single_posts function
+ *
+ * @since 0.1.0
+ */
+function slimline_templates_single_posts() {
+
+	include( trailingslashit( SLIMLINE_TEMPLATES_INC ) . 'meta-boxes.php' );
+
+	add_action( 'add_meta_boxes', 'slimline_templates_single_posts_add_meta_box' );
 }
