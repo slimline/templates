@@ -123,16 +123,61 @@ function slimline_templates_get_user_template_slug( $object = null ) {
 
 function slimline_templates_get_term( $term = null ) {
 
+	/**
+	 * If we've already been provided a term, return it now
+	 */
 	if ( $term instanceof WP_Term ) {
+
 		return $term;
+
+	/**
+	 * If no term information has been provided, check for a queried term
+	 *
+	 * @link http://php.net/manual/en/function.is-null.php
+	 *       Documentation of the PHP `is_null` function
+	 */
 	} elseif ( is_null( $term ) ) { // if ( $term instanceof WP_Term )
+
+		/**
+		 * Check if this is term archive
+		 *
+		 * @link https://developer.wordpress.org/reference/functions/is_category/
+		 *       Documentation of the `is_category` function
+		 * @link https://developer.wordpress.org/reference/functions/is_tag/
+		 *       Documentation of the `is_tag` function
+		 * @link https://developer.wordpress.org/reference/functions/is_tax/
+		 *       Documentation of the `is_tax` function
+		 */
 		if ( is_category() || is_tag() || is_tax() ) {
+
+			/**
+			 * Return the currently queried term
+			 *
+			 * @link https://developer.wordpress.org/reference/functions/get_queried_object/
+			 *       Documentation of the `get_queried_object` function
+			 */
 			return get_queried_object();
+
 		} // if ( is_category() || is_tag() || is_tax() )
+
+	/**
+	 * If we have some information passed, try to retrieve the term
+	 */
 	} elseif ( $term ) { // if ( $term instanceof WP_Term )
+
+		/**
+		 * Try to retrieve the term based on the information provided
+		 *
+		 * @link https://developer.wordpress.org/reference/functions/get_term/
+		 *       Documentation of the `get_term` function
+		 */
 		return get_term( $term );
+
 	} // if ( $term instanceof WP_Term )
 
+	/**
+	 * Return FALSE (no term retrieved)
+	 */
 	return false;
 }
 
